@@ -1,5 +1,6 @@
 package at.schrer.alarms.config;
 
+import at.schrer.alarms.sync.jobs.BglAlarmsSynchronizerJob;
 import at.schrer.alarms.sync.jobs.UAAlarmsSynchronizerJob;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,26 @@ public class QuartzConfiguration {
                 .forJob(uaSyncJobDetail)
                 .withIdentity("uaAlarmSyncTrigger")
                 .withDescription("Alarm Sync for Upper Austria")
+                .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(defaultSyncInterval))
+                .build();
+    }
+
+    @Bean
+    public JobDetail bglSyncJobDetail(){
+        return JobBuilder.newJob()
+                .ofType(BglAlarmsSynchronizerJob.class)
+                .storeDurably()
+                .withIdentity("bgAlarmSyncJob")
+                .withDescription("Burgenland Alarms Sync Job")
+                .build();
+    }
+
+    @Bean
+    public Trigger bglSyncTrigger(JobDetail bglSyncJobDetail) {
+        return TriggerBuilder.newTrigger()
+                .forJob(bglSyncJobDetail)
+                .withIdentity("bglAlarmSyncTrigger")
+                .withDescription("Alarm Sync for Burgenland")
                 .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(defaultSyncInterval))
                 .build();
     }

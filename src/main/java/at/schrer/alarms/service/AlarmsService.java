@@ -47,6 +47,8 @@ public class AlarmsService {
                     .ongoing(alarmEntity.getOngoing())
                     .fireBrigades(mappedBrigades)
                     .type(toAlarmType(alarmEntity.getType()))
+                    .longitude(alarmEntity.getLongitude())
+                    .latitude(alarmEntity.getLatitude())
                     .build();
             alarms.add(alarmModel);
         }

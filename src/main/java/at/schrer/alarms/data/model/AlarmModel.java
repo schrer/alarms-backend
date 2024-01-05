@@ -3,6 +3,7 @@ package at.schrer.alarms.data.model;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -16,5 +17,7 @@ public class AlarmModel {
     private Integer level;
     private AlarmTypeModel type;
     private Boolean ongoing;
+    private BigDecimal longitude;
+    private BigDecimal latitude;
     private List<FireBrigadeModel> fireBrigades;
 }

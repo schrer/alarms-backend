@@ -2,7 +2,7 @@ package at.schrer.alarms.data.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -25,6 +25,6 @@ public class AlarmEntity {
     private BigDecimal latitude;
     private BigDecimal longitude;
     private StateEntity state;
-    @OneToMany
+    @ManyToMany
     private List<FireBrigadeEntity> fireBrigades;
 }
