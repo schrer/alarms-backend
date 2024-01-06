@@ -34,7 +34,7 @@ public class UAUpdater implements AlarmsUpdater{
 
     @Override
     public void synchronize() throws SynchronizationException {
-        UAResponseData response = alarmsClient.getLast6Hours();
+        UAResponseData response = alarmsClient.getDailyReport();
         LOGGER.warn("Number of received alarms: {}", response.getNumAlarms());
         List<AlarmEntity> alarmEntities = response.getEinsaetze().values().stream()
                 .map(this::toAlarmEntity)

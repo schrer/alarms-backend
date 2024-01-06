@@ -1,11 +1,10 @@
 package at.schrer.alarms.data.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 
@@ -13,10 +12,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Entity(name = "FireBrigade")
 public class FireBrigadeEntity {
-    @Id
-    private String id;
+    private @Id String id;
     private StateEntity state;
     private String name;
 

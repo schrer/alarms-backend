@@ -31,12 +31,12 @@ public class UAAlarmsClient extends BaseClient<UAResponseData>{
         return get(BASE_URL + "json_6stunden.txt");
     }
 
-    // 2 Tage: Vorgestern bis Heute, Erstellung zu jeder 1/4 Stunde
+    // taeglich: alle Einsätze des aktuellen Tages, Erstellung jede Minute (5 Minuten bei Starklast)
     public UAResponseData getDailyReport(){
         return get(BASE_URL + "json_taeglich.txt");
     }
 
-    // taeglich: alle Einsätze des aktuellen Tages, Erstellung jede Minute (5 Minuten bei Starklast)
+    // 2 Tage: Vorgestern bis Heute, Erstellung zu jeder 1/4 Stunde
     public UAResponseData getTwoDayReport(){
         return get(BASE_URL + "json_2tage.txt");
     }
