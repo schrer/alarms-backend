@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-public class UAUpdater implements AlarmsUpdater{
+public class UAUpdater implements Updater {
     private static final Logger LOGGER = LoggerFactory.getLogger(UAUpdater.class);
 
     private final UAAlarmsClient alarmsClient;

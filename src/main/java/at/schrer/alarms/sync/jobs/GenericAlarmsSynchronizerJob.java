@@ -1,14 +1,14 @@
 package at.schrer.alarms.sync.jobs;
 
 import at.schrer.alarms.exception.SynchronizationException;
-import at.schrer.alarms.sync.updater.AlarmsUpdater;
+import at.schrer.alarms.sync.updater.Updater;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class GenericAlarmsSynchronizerJob<T extends AlarmsUpdater> implements Job {
+public abstract class GenericAlarmsSynchronizerJob<T extends Updater> implements Job {
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     private final T updater;

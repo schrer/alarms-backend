@@ -1,6 +1,5 @@
 package at.schrer.alarms.client;
 
-import at.schrer.alarms.data.client.upperaustria.UAResponseData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;

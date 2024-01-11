@@ -1,5 +1,6 @@
 package at.schrer.alarms.data.entity;
 
+import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,9 @@ public class FireBrigadeEntity {
     private @Id String id;
     private StateEntity state;
     private String name;
+    private String street;
+    private String postcode;
+    private String city;
 
     @Override
     public boolean equals(Object o) {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BglUpdater implements AlarmsUpdater {
+public class BglUpdater implements Updater {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BglUpdater.class);
 
