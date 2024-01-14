@@ -1,7 +1,11 @@
 package at.schrer.alarms.data.client.bgl;
 
 import com.opencsv.bean.CsvBindByPosition;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class BglFireBrigade {
 
     @CsvBindByPosition(position = 0)
@@ -12,36 +16,4 @@ public class BglFireBrigade {
     private String postcode;
     @CsvBindByPosition(position = 3)
     private String city;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getPostcode() {
-        return postcode;
-    }
-
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 }

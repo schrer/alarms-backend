@@ -1,10 +1,14 @@
 package at.schrer.alarms.data.client.upperaustria;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.Map;
 
+@Getter
+@Setter
 public class Einsatz {
 
     @JsonProperty("num1")
@@ -36,76 +40,4 @@ public class Einsatz {
 
     @JsonProperty("bezirk")
     private District district;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Integer getBrigadeCount() {
-        return brigadeCount;
-    }
-
-    public void setBrigadeCount(Integer brigadeCount) {
-        this.brigadeCount = brigadeCount;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public GeoLocation getGeoLocation() {
-        return geoLocation;
-    }
-
-    public void setGeoLocation(GeoLocation geoLocation) {
-        this.geoLocation = geoLocation;
-    }
-
-    public Map<Integer, UAFireBrigade> getFireBrigades() {
-        return fireBrigades;
-    }
-
-    public void setFireBrigades(Map<Integer, UAFireBrigade> fireBrigades) {
-        this.fireBrigades = fireBrigades;
-    }
 }

@@ -1,13 +1,10 @@
 package at.schrer.alarms.data.client.upperaustria;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class EinsatzWrapper {
     private Einsatz einsatz;
-
-    public Einsatz getEinsatz() {
-        return einsatz;
-    }
-
-    public void setEinsatz(Einsatz einsatz) {
-        this.einsatz = einsatz;
-    }
 }

@@ -41,14 +41,17 @@ public class BglBrigadesUpdater implements Updater {
     }
 
     private FireBrigadeEntity toFireBrigadeEntity(BglFireBrigade source){
-        String id = StateEntity.BURGENLAND.name() + source.getName().toLowerCase();
         return FireBrigadeEntity.builder()
-                .id(id)
+                .id(buildId(source))
                 .name(source.getName())
                 .state(StateEntity.BURGENLAND)
                 .postcode(source.getPostcode())
                 .city(source.getCity())
                 .street(source.getStreet())
                 .build();
+    }
+
+    private String buildId(BglFireBrigade brigade) {
+        return StateEntity.BURGENLAND.name() + "_" + brigade.getName().toLowerCase();
     }
 }
