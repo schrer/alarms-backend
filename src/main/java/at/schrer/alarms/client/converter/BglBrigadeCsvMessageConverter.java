@@ -1,5 +1,8 @@
 package at.schrer.alarms.client.converter;
 
+import at.schrer.alarms.data.client.bgl.BglFireBrigade;
+import at.schrer.alarms.data.client.bgl.BglFireBrigadeHolder;
+
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,21 +15,14 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
 
-public class CsvMessageConverter<T> implements HttpMessageConverter<List<T>> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvMessageConverter.class);
+public class BglBrigadeCsvMessageConverter implements HttpMessageConverter<BglFireBrigadeHolder> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BglBrigadeCsvMessageConverter.class);
 
     @Override
     public boolean canRead(Class clazz, MediaType mediaType) {
-        Type genericSuperclass = this.getClass().getGenericSuperclass();
-        if (genericSuperclass instanceof ParameterizedType parameterizedType) {
-            return parameterizedType.getActualTypeArguments()[0].equals(clazz);
-        }
-
-        throw new RuntimeException("Missing type parameter");
+        return BglFireBrigadeHolder.class.equals(clazz);
     }
 
     @Override
@@ -40,14 +36,18 @@ public class CsvMessageConverter<T> implements HttpMessageConverter<List<T>> {
     }
 
     @Override
-    public List<T> read(Class<? extends List<T>> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
-        return new CsvToBeanBuilder<T>(new InputStreamReader(inputMessage.getBody()))
+    public BglFireBrigadeHolder read(Class<? extends BglFireBrigadeHolder> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
+        List<BglFireBrigade> brigades = new CsvToBeanBuilder<BglFireBrigade>(new InputStreamReader(inputMessage.getBody()))
+                .withType(BglFireBrigade.class)
+                .withSeparator(';')
+                .withSkipLines(1)
                 .build()
                 .parse();
+        return new BglFireBrigadeHolder(brigades);
     }
 
     @Override
-    public void write(List<T> ts, MediaType contentType, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+    public void write(BglFireBrigadeHolder ts, MediaType contentType, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
         // Not implemented
         LOGGER.warn("Trying to write CSV object with message converter that does not support writing.");
     }

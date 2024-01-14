@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class UAAlarmsSynchronizerJob extends GenericAlarmsSynchronizerJob<UAUpdater> {
     public UAAlarmsSynchronizerJob(UAUpdater updater) {
-        super(updater);
+        super(updater, "Upper Austria alarms");
     }
 }

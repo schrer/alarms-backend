@@ -1,15 +1,16 @@
 package at.schrer.alarms.data.client.bgl;
 
-import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 
 public class BglFireBrigade {
-    @CsvBindByName(column = "Bezeichnung")
+
+    @CsvBindByPosition(position = 0)
     private String name;
-    @CsvBindByName(column = "Strasse")
+    @CsvBindByPosition(position = 1)
     private String street;
-    @CsvBindByName(column = "PLZ")
+    @CsvBindByPosition(position = 2)
     private String postcode;
-    @CsvBindByName(column = "Ort")
+    @CsvBindByPosition(position = 3)
     private String city;
 
     public String getName() {

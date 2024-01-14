@@ -1,6 +1,7 @@
 package at.schrer.alarms.config;
 
 import at.schrer.alarms.sync.jobs.BglAlarmsSynchronizerJob;
+import at.schrer.alarms.sync.jobs.BglBrigadesSynchronizerJob;
 import at.schrer.alarms.sync.jobs.UAAlarmsSynchronizerJob;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,45 +11,77 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QuartzConfiguration {
     @Value("${alarms.sync.interval}")
-    private int defaultSyncInterval;
+    private int defaultAlarmSyncInterval;
+
+    @Value("${brigades.sync.interval}")
+    private int defaultBrigadesSyncInterval;
 
     @Bean
-    public JobDetail uaSyncJobDetail(){
+    public JobDetail uaAlarmSyncJobDetail(){
+        return createJobDetail(UAAlarmsSynchronizerJob.class,
+                "uaAlarmSyncJob",
+                "Upper Austria Alarms Sync Job"
+        );
+    }
+
+    @Bean
+    public Trigger uaAlarmSyncTrigger(JobDetail uaAlarmSyncJobDetail) {
+        return createSyncTrigger(uaAlarmSyncJobDetail,
+                "uaAlarmSyncTrigger",
+                "Alarm Sync for Upper Austria",
+                defaultAlarmSyncInterval
+        );
+    }
+
+    @Bean
+    public JobDetail bglAlarmSyncJobDetail(){
+        return createJobDetail(BglAlarmsSynchronizerJob.class,
+                "bgAlarmSyncJob",
+                "Burgenland Alarms Sync Job"
+        );
+    }
+
+    @Bean
+    public Trigger bglAlarmSyncTrigger(JobDetail bglAlarmSyncJobDetail) {
+        return createSyncTrigger(bglAlarmSyncJobDetail,
+                "bglAlarmSyncTrigger",
+                "Alarm Sync for Burgenland",
+                defaultAlarmSyncInterval
+        );
+    }
+
+    @Bean
+    public JobDetail bglBrigadesSyncJobDetail(){
+        return createJobDetail(BglBrigadesSynchronizerJob.class,
+                "bgBrigadesSyncJob",
+                "Burgenland brigade Sync Job"
+        );
+    }
+
+    @Bean
+    public Trigger bglBrigadesSyncTrigger(JobDetail bglBrigadesSyncJobDetail) {
+        return createSyncTrigger(bglBrigadesSyncJobDetail,
+                "bglBrigadesSyncTrigger",
+                "bglBrigadesSyncTrigger",
+                defaultBrigadesSyncInterval
+        );
+    }
+
+    private JobDetail createJobDetail(Class<? extends Job> clazz, String identity, String description){
         return JobBuilder.newJob()
-                .ofType(UAAlarmsSynchronizerJob.class)
+                .ofType(clazz)
                 .storeDurably()
-                .withIdentity("uaAlarmSyncJob")
-                .withDescription("Upper Austria Alarms Sync Job")
+                .withIdentity(identity)
+                .withDescription(description)
                 .build();
     }
 
-    @Bean
-    public Trigger uaSyncTrigger(JobDetail uaSyncJobDetail) {
+    private Trigger createSyncTrigger(JobDetail jobDetail, String identity, String description, int intervalInSeconds){
         return TriggerBuilder.newTrigger()
-                .forJob(uaSyncJobDetail)
-                .withIdentity("uaAlarmSyncTrigger")
-                .withDescription("Alarm Sync for Upper Austria")
-                .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(defaultSyncInterval))
-                .build();
-    }
-
-    @Bean
-    public JobDetail bglSyncJobDetail(){
-        return JobBuilder.newJob()
-                .ofType(BglAlarmsSynchronizerJob.class)
-                .storeDurably()
-                .withIdentity("bgAlarmSyncJob")
-                .withDescription("Burgenland Alarms Sync Job")
-                .build();
-    }
-
-    @Bean
-    public Trigger bglSyncTrigger(JobDetail bglSyncJobDetail) {
-        return TriggerBuilder.newTrigger()
-                .forJob(bglSyncJobDetail)
-                .withIdentity("bglAlarmSyncTrigger")
-                .withDescription("Alarm Sync for Burgenland")
-                .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(defaultSyncInterval))
+                .forJob(jobDetail)
+                .withIdentity(identity)
+                .withDescription(description)
+                .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(intervalInSeconds))
                 .build();
     }
 }

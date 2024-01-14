@@ -12,14 +12,16 @@ public abstract class GenericAlarmsSynchronizerJob<T extends Updater> implements
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     private final T updater;
+    private final String targetName;
 
-    public GenericAlarmsSynchronizerJob(T updater) {
+    protected GenericAlarmsSynchronizerJob(T updater, String targetName) {
         this.updater = updater;
+        this.targetName = targetName;
     }
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        LOGGER.debug("Running Upper Austria Sync Job");
+        LOGGER.debug("Running Sync Job for: {}", this.targetName);
         try {
             this.updater.synchronize();
         } catch (SynchronizationException e) {
